@@ -76,6 +76,7 @@ public class IntegerListImpl implements IntegerList{
 
     @Override
     public boolean contains(Integer item) {
+        validateItem(item);
         sortSelection(storage);
         return binarContains(item);
     }
@@ -176,7 +177,7 @@ public class IntegerListImpl implements IntegerList{
                 return true;
             }
 
-            if (item < storage[mid]) {
+            if (item.intValue() < storage[mid]) {
                 max = mid - 1;
             } else {
                 min = mid + 1;
