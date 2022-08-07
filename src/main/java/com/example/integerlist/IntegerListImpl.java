@@ -1,6 +1,7 @@
 package com.example.integerlist;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class IntegerListImpl implements IntegerList{
 
@@ -77,8 +78,9 @@ public class IntegerListImpl implements IntegerList{
     @Override
     public boolean contains(Integer item) {
         validateItem(item);
-        sortSelection(storage);
-        return binarContains(item);
+        Integer[] storageCopy = this.toArray();
+        sortSelection(storageCopy);
+        return binarContains(storageCopy, item);
     }
 
     @Override
@@ -166,18 +168,18 @@ public class IntegerListImpl implements IntegerList{
         arr[indexA] = arr[indexB];
         arr[indexB] = tmp;
     }
-    private boolean binarContains(Integer item) {
+    private boolean binarContains(Integer[] arr,Integer item) {
         int min = 0;
         int max = size - 1;
 
         while (min <= max) {
             int mid = (min + max) / 2;
 
-            if (item.equals(mid)) {
+            if (Objects.equals(item, arr[mid])) {
                 return true;
             }
 
-            if (item.intValue() < storage[mid]) {
+            if (item < storage[mid]) {
                 max = mid - 1;
             } else {
                 min = mid + 1;
