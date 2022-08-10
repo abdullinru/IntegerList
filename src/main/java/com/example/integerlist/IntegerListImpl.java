@@ -79,7 +79,7 @@ public class IntegerListImpl implements IntegerList{
     public boolean contains(Integer item) {
         validateItem(item);
         Integer[] storageCopy = this.toArray();
-        sortSelection(storageCopy);
+        quickSort(storageCopy, 0,size-1);
         return binarContains(storageCopy, item);
     }
 
@@ -151,19 +151,44 @@ public class IntegerListImpl implements IntegerList{
         storage = newMas;
     }
 
-    public static void sortSelection(Integer[] arr) {
-        for (int i = 0; i < arr.length - 1; i++) {
-            int minElementIndex = i;
-            for (int j = i + 1; j < arr.length; j++) {
-                if (arr[j] < arr[minElementIndex]) {
-                    minElementIndex = j;
-                }
-            }
-            swapElements(arr, i, minElementIndex);
+//    public static void sortSelection(Integer[] arr) {
+//        for (int i = 0; i < arr.length - 1; i++) {
+//            int minElementIndex = i;
+//            for (int j = i + 1; j < arr.length; j++) {
+//                if (arr[j] < arr[minElementIndex]) {
+//                    minElementIndex = j;
+//                }
+//            }
+//            swapElements(arr, i, minElementIndex);
+//        }
+//    }
+
+    public static void quickSort(Integer[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
         }
     }
 
-    private static void swapElements(Integer[] arr, int indexA, int indexB) {
+    private static int partition(Integer[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
+    }
+
+    private static void swapElements(Integer [] arr, int indexA, int indexB) {
         int tmp = arr[indexA];
         arr[indexA] = arr[indexB];
         arr[indexB] = tmp;
