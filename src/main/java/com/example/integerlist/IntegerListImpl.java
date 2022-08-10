@@ -22,7 +22,7 @@ public class IntegerListImpl implements IntegerList{
     @Override
     public Integer add(Integer item) {
         if (size == storage.length) {
-            biggerMas();
+            grow();
         }
         validateItem(item);
         storage[size++] = item;
@@ -32,7 +32,7 @@ public class IntegerListImpl implements IntegerList{
     @Override
     public Integer add(int index, Integer item) {
         if (size == storage.length) {
-            biggerMas();
+            grow();
         }
         validateItem(item);
         validateIndex(index);
@@ -145,8 +145,8 @@ public class IntegerListImpl implements IntegerList{
             throw new ItemNullException("Item is Null");
         }
     }
-    private void biggerMas() {
-        Integer[] newMas = new Integer[storage.length * 2];
+    private void grow() {
+        Integer[] newMas = new Integer[(int) (storage.length * 1.5)];
         System.arraycopy(storage, 0, newMas, 0, size);
         storage = newMas;
     }
