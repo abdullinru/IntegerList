@@ -1,5 +1,6 @@
 package com.example.integerlist;
 
+// Interface list which save objects of type Integer
 public interface IntegerList {
     // Добавление элемента.
     // Вернуть добавленный элемент
